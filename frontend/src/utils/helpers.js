@@ -83,3 +83,4 @@ export function getTheme(colorName) {
   const key = (colorName || 'blue').toLowerCase();
   return COLOR_THEMES[key] || COLOR_THEMES.blue;
 }
+

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useAuth } from '../context/AuthContext';
-import { X, ArrowRight, CheckCircle2, Sparkles } from 'lucide-react';
+import { X, ArrowRight, Sparkles } from 'lucide-react';
 
 export default function LandingPage() {
   const { login, signup } = useAuth();
@@ -43,10 +43,8 @@ export default function LandingPage() {
     setLoading(true);
     setError(null);
     try {
-      // First try logging into default demo user
       await login('tanay@example.com', 'password123');
     } catch (err) {
-      // If not yet created, create demo user
       try {
         await signup('Tanay', 'Pratap', 'tanay@example.com', 'password123');
       } catch (signupErr) {
@@ -64,7 +62,7 @@ export default function LandingPage() {
         {/* Left Column: Copy & Actions */}
         <div className="lg:col-span-7 space-y-8">
           <div>
-            <h1 className="text-3xl font-extrabold tracking-tight text-slate-800 flex items-center gap-2">
+            <h1 className="text-3xl font-extrabold tracking-tight text-slate-800 flex items-center gap-1.5">
               My<span className="text-[#5B4DFC]">Website</span>
             </h1>
           </div>
@@ -84,18 +82,18 @@ export default function LandingPage() {
             <div className="flex flex-wrap items-center gap-4">
               <button
                 onClick={() => openAuth('signup')}
-                className="px-8 py-3.5 rounded-2xl bg-[#5B4DFC] hover:bg-[#4d3fe6] active:scale-95 text-white font-bold text-base shadow-lg shadow-indigo-200 transition-all duration-150 flex items-center gap-2"
+                className="px-8 py-3.5 rounded-2xl bg-[#5B4DFC] hover:bg-[#4d3fe6] active:scale-95 text-white font-bold text-sm shadow-lg shadow-indigo-200 transition-all duration-150 flex items-center gap-2"
               >
                 <span>Join Now</span>
-                <ArrowRight size={18} />
+                <ArrowRight size={17} />
               </button>
 
               <button
                 onClick={handleDemoLogin}
                 disabled={loading}
-                className="px-6 py-3.5 rounded-2xl bg-indigo-50 hover:bg-indigo-100 active:scale-95 text-[#5B4DFC] font-bold text-sm transition-all duration-150 flex items-center gap-2 border border-indigo-100"
+                className="px-6 py-3.5 rounded-2xl bg-indigo-50 hover:bg-indigo-100 active:scale-95 text-[#5B4DFC] font-bold text-xs transition-all duration-150 flex items-center gap-2 border border-indigo-100"
               >
-                <Sparkles size={16} />
+                <Sparkles size={15} />
                 <span>Demo One-Click Login</span>
               </button>
             </div>
@@ -103,7 +101,7 @@ export default function LandingPage() {
             <div>
               <button
                 onClick={() => openAuth('login')}
-                className="text-sm font-semibold text-[#5B4DFC] hover:underline cursor-pointer"
+                className="text-xs font-semibold text-[#5B4DFC] hover:underline cursor-pointer"
               >
                 Already have an account?
               </button>
@@ -114,10 +112,8 @@ export default function LandingPage() {
         {/* Right Column: High Fidelity 3D Explorer Illustration */}
         <div className="lg:col-span-5 flex items-center justify-center">
           <div className="relative w-full max-w-[340px] aspect-square flex items-center justify-center">
-            {/* Soft decorative background circles */}
             <div className="absolute w-72 h-72 rounded-full bg-gradient-to-tr from-indigo-100/60 to-purple-50 blur-xl"></div>
             
-            {/* SVG Visual Representation of the Flag Climber Character */}
             <svg viewBox="0 0 400 400" className="w-full h-full relative z-10 drop-shadow-xl" xmlns="http://www.w3.org/2000/svg">
               <defs>
                 <linearGradient id="bodyGrad" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -137,42 +133,29 @@ export default function LandingPage() {
                 </filter>
               </defs>
 
-              {/* Base Platform / Rock */}
               <ellipse cx="200" cy="360" rx="140" ry="24" fill="#E2E8F0" />
               <ellipse cx="200" cy="358" rx="120" ry="18" fill="#CBD5E1" />
 
-              {/* Backpack */}
               <rect x="235" y="165" width="45" height="75" rx="20" fill="url(#backpackGrad)" filter="url(#shadow)" />
 
-              {/* Character Legs */}
-              {/* Back Leg */}
               <path d="M 230 240 L 255 330 L 275 335 L 260 345 L 225 340 Z" fill="#334155" />
-              {/* Front Leg on Step */}
               <path d="M 185 240 L 155 290 L 185 320 L 195 325 L 150 330 Z" fill="#1E293B" />
 
-              {/* Character Body / Torso (Blue Puffer Jacket) */}
               <rect x="175" y="150" width="70" height="95" rx="32" fill="url(#bodyGrad)" filter="url(#shadow)" />
 
-              {/* Head / Face */}
               <circle cx="210" cy="115" r="24" fill="#FCD34D" filter="url(#shadow)" />
-              {/* Hair / Cap */}
               <path d="M 188 112 C 188 95, 232 95, 232 112 Z" fill="#1E293B" />
 
-              {/* Raised Left Arm with Victory Fist */}
               <path d="M 235 165 Q 260 145 250 120" stroke="#6366F1" strokeWidth="22" strokeLinecap="round" />
               <circle cx="250" cy="115" r="13" fill="#FCD34D" />
 
-              {/* Right Hand Holding Flagpole */}
               <path d="M 185 175 Q 160 195 150 205" stroke="#4F46E5" strokeWidth="20" strokeLinecap="round" />
               <circle cx="148" cy="208" r="13" fill="#FCD34D" />
 
-              {/* Flagpole */}
               <line x1="140" y1="60" x2="155" y2="355" stroke="#78350F" strokeWidth="6" strokeLinecap="round" />
 
-              {/* White Flag Flying */}
               <path d="M 143 65 L 230 75 Q 215 95 230 115 L 145 105 Z" fill="url(#flagGrad)" filter="url(#shadow)" />
 
-              {/* Floating Success Badges */}
               <g transform="translate(60, 120)" className="animate-bounce" style={{ animationDuration: '3s' }}>
                 <rect width="44" height="44" rx="14" fill="#10B981" filter="url(#shadow)" />
                 <path d="M 14 22 L 20 28 L 30 16" fill="none" stroke="#FFFFFF" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" />
@@ -189,21 +172,21 @@ export default function LandingPage() {
 
       {/* Auth Modal */}
       {isAuthOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm animate-fade-in">
-          <div className="bg-white rounded-3xl w-full max-w-md shadow-2xl border border-slate-100 p-8 relative">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/40 backdrop-blur-sm animate-fade-in">
+          <div className="bg-white rounded-2xl w-full max-w-[420px] shadow-2xl border border-slate-100 p-7 relative">
             <button
               onClick={() => setIsAuthOpen(false)}
-              className="absolute top-6 right-6 p-2 rounded-full text-slate-400 hover:text-slate-700 hover:bg-slate-100 transition-colors"
+              className="absolute top-5 right-5 p-1.5 rounded-lg text-slate-400 hover:text-slate-600 hover:bg-slate-100 transition-colors"
             >
-              <X size={20} />
+              <X size={18} />
             </button>
 
             {/* Modal Title & Tabs */}
-            <div className="mb-6">
-              <h3 className="text-2xl font-black text-slate-800">
+            <div className="mb-5">
+              <h3 className="text-xl font-extrabold text-slate-900 tracking-tight">
                 {authMode === 'signup' ? 'Create Account' : 'Welcome Back'}
               </h3>
-              <p className="text-xs text-slate-400 mt-1">
+              <p className="text-xs text-slate-400 mt-0.5">
                 {authMode === 'signup'
                   ? 'Start building lasting habits today'
                   : 'Log in to track your habits and streaks'}
@@ -211,13 +194,13 @@ export default function LandingPage() {
             </div>
 
             {/* Tab switch */}
-            <div className="grid grid-cols-2 p-1 bg-slate-100 rounded-2xl mb-6">
+            <div className="grid grid-cols-2 p-1 bg-slate-100 rounded-xl mb-5">
               <button
                 type="button"
                 onClick={() => { setAuthMode('signup'); setError(null); }}
-                className={`py-2 text-xs font-bold rounded-xl transition-all ${
+                className={`py-2 text-xs font-bold rounded-lg transition-all ${
                   authMode === 'signup'
-                    ? 'bg-white text-slate-900 shadow-sm'
+                    ? 'bg-white text-slate-900 shadow-2xs'
                     : 'text-slate-500 hover:text-slate-800'
                 }`}
               >
@@ -226,9 +209,9 @@ export default function LandingPage() {
               <button
                 type="button"
                 onClick={() => { setAuthMode('login'); setError(null); }}
-                className={`py-2 text-xs font-bold rounded-xl transition-all ${
+                className={`py-2 text-xs font-bold rounded-lg transition-all ${
                   authMode === 'login'
-                    ? 'bg-white text-slate-900 shadow-sm'
+                    ? 'bg-white text-slate-900 shadow-2xs'
                     : 'text-slate-500 hover:text-slate-800'
                 }`}
               >
@@ -242,55 +225,55 @@ export default function LandingPage() {
               </div>
             )}
 
-            <form onSubmit={handleSubmit} className="space-y-4">
+            <form onSubmit={handleSubmit} className="space-y-3.5">
               {authMode === 'signup' && (
                 <div className="grid grid-cols-2 gap-3">
                   <div>
-                    <label className="block text-xs font-bold text-slate-600 mb-1">First Name</label>
+                    <label className="block text-xs font-semibold text-slate-700 mb-1">First Name</label>
                     <input
                       type="text"
                       required
                       value={firstName}
                       onChange={(e) => setFirstName(e.target.value)}
                       placeholder="Tanay"
-                      className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#5B4DFC]/30 focus:border-[#5B4DFC]"
+                      className="w-full px-3.5 py-2 rounded-xl border border-slate-200 text-xs focus:outline-none focus:border-[#5B4DFC] focus:ring-2 focus:ring-[#5B4DFC]/10 transition-all"
                     />
                   </div>
                   <div>
-                    <label className="block text-xs font-bold text-slate-600 mb-1">Last Name</label>
+                    <label className="block text-xs font-semibold text-slate-700 mb-1">Last Name</label>
                     <input
                       type="text"
                       required
                       value={lastName}
                       onChange={(e) => setLastName(e.target.value)}
                       placeholder="Pratap"
-                      className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#5B4DFC]/30 focus:border-[#5B4DFC]"
+                      className="w-full px-3.5 py-2 rounded-xl border border-slate-200 text-xs focus:outline-none focus:border-[#5B4DFC] focus:ring-2 focus:ring-[#5B4DFC]/10 transition-all"
                     />
                   </div>
                 </div>
               )}
 
               <div>
-                <label className="block text-xs font-bold text-slate-600 mb-1">Email</label>
+                <label className="block text-xs font-semibold text-slate-700 mb-1">Email</label>
                 <input
                   type="email"
                   required
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="name@example.com"
-                  className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#5B4DFC]/30 focus:border-[#5B4DFC]"
+                  className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs focus:outline-none focus:border-[#5B4DFC] focus:ring-2 focus:ring-[#5B4DFC]/10 transition-all"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-bold text-slate-600 mb-1">Password</label>
+                <label className="block text-xs font-semibold text-slate-700 mb-1">Password</label>
                 <input
                   type="password"
                   required
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="At least 6 characters"
-                  className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#5B4DFC]/30 focus:border-[#5B4DFC]"
+                  className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs focus:outline-none focus:border-[#5B4DFC] focus:ring-2 focus:ring-[#5B4DFC]/10 transition-all"
                 />
               </div>
 
@@ -298,7 +281,7 @@ export default function LandingPage() {
                 <button
                   type="submit"
                   disabled={loading}
-                  className="w-full py-3.5 rounded-xl bg-[#5B4DFC] hover:bg-[#4d3fe6] text-white font-bold text-sm shadow-md shadow-indigo-100 transition-all disabled:opacity-50"
+                  className="w-full py-3 rounded-xl bg-[#5B4DFC] hover:bg-[#4d3fe6] text-white font-bold text-xs shadow-md shadow-indigo-100 transition-all disabled:opacity-50"
                 >
                   {loading
                     ? 'Please wait...'

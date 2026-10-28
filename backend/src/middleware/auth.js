@@ -36,3 +36,4 @@ module.exports = {
   requireAuth,
   JWT_SECRET
 };
+

@@ -283,3 +283,4 @@ test('Completion Tracking and Duplicate Prevention', async (t) => {
   });
   assert.equal(listAfterUndo.data.completions.length, 0);
 });
+

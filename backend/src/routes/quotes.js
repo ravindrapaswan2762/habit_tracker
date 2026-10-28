@@ -20,3 +20,4 @@ router.get('/daily', (req, res) => {
 });
 
 module.exports = router;
+
