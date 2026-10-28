@@ -1,62 +1,22 @@
-import React, { useState, useEffect, useRef } from 'react';
-import lottie from 'lottie-web';
-import loginAnimation from '../assets/login.json';
+import React, { useState } from 'react';
 import { useAuth } from '../context/AuthContext';
-import { X, Sparkles } from 'lucide-react';
-
-function CharacterAnimation() {
-  const containerRef = useRef(null);
-  const [animLoaded, setAnimLoaded] = useState(false);
-
-  useEffect(() => {
-    if (!containerRef.current) return;
-
-    let anim = null;
-    try {
-      anim = lottie.loadAnimation({
-        container: containerRef.current,
-        renderer: 'svg',
-        loop: true,
-        autoplay: true,
-        animationData: loginAnimation,
-        rendererSettings: {
-          preserveAspectRatio: 'xMidYMid meet',
-          progressiveLoad: true,
-          hideOnTransparent: false
-        }
-      });
-
-      anim.addEventListener('DOMLoaded', () => {
-        setAnimLoaded(true);
-      });
-    } catch (err) {
-      console.error('Failed to load lottie animation:', err);
-    }
-
-    return () => {
-      if (anim) {
-        try {
-          anim.destroy();
-        } catch (e) {}
-      }
-    };
-  }, []);
-
-  return (
-    <div className="w-full max-w-[280px] sm:max-w-[340px] md:max-w-[390px] lg:max-w-[440px] h-[340px] sm:h-[420px] md:h-[480px] lg:h-[520px] flex items-center justify-center relative select-none">
-      <div
-        ref={containerRef}
-        className="w-full h-full flex items-center justify-center [&_svg]:max-h-full [&_svg]:w-auto [&_svg]:mx-auto"
-      />
-    </div>
-  );
-}
+import {
+  X,
+  ArrowRight,
+  Play,
+  CheckCircle2,
+  Zap,
+  ShieldCheck,
+  Dumbbell,
+  Sparkles
+} from 'lucide-react';
+import heroCharacter from '../assets/hero-character.png';
 
 export default function LandingPage() {
   const { login, signup } = useAuth();
 
   const [isAuthOpen, setIsAuthOpen] = useState(false);
-  const [authMode, setAuthMode] = useState('signup');
+  const [authMode, setAuthMode] = useState('signup'); // 'signup' or 'login'
 
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
@@ -106,92 +66,194 @@ export default function LandingPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#F0F2F5] sm:bg-[#EAEAEA] flex items-center justify-center p-0 sm:p-6 md:p-10 font-['Plus_Jakarta_Sans',sans-serif]">
-      {/* Main Hero Card matching exact Figma design */}
-      <div className="w-full max-w-6xl min-h-screen sm:min-h-0 bg-white sm:rounded-[36px] sm:shadow-xl sm:border border-slate-100 overflow-hidden flex flex-col justify-between p-6 sm:p-10 md:p-14 lg:p-20">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+    <div className="min-h-screen bg-gradient-to-br from-[#F8FAFC] via-white to-[#F1F5F9] font-['Plus_Jakarta_Sans',sans-serif] flex flex-col justify-between">
+      
+      {/* Top Header Navbar */}
+      <header className="w-full max-w-7xl mx-auto px-6 sm:px-10 py-6 flex items-center justify-between">
+        <div className="flex items-center gap-1.5 cursor-pointer">
+          <span className="text-2xl sm:text-3xl font-black tracking-tight text-slate-900">
+            My<span className="text-[#5B4DFC]">Website</span>
+          </span>
+        </div>
+
+        {/* Top Navbar Actions */}
+        <div className="flex items-center gap-3">
+          <button
+            type="button"
+            onClick={() => openAuth('login')}
+            className="px-4 py-2 text-xs sm:text-sm font-bold text-slate-700 hover:text-[#5B4DFC] transition-colors cursor-pointer"
+          >
+            Log In
+          </button>
+          <button
+            type="button"
+            onClick={() => openAuth('signup')}
+            className="px-5 py-2.5 rounded-xl bg-[#5B4DFC] hover:bg-[#483cd4] text-white text-xs sm:text-sm font-bold shadow-sm active:scale-95 transition-all cursor-pointer"
+          >
+            Sign Up
+          </button>
+        </div>
+      </header>
+
+      {/* Main Hero Container */}
+      <main className="w-full max-w-7xl mx-auto px-6 sm:px-10 py-6 sm:py-10 lg:py-14 flex-1 flex items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-8 items-center w-full">
           
-          {/* Left Column: Branding, Headline, Paragraph, Actions */}
-          <div className="lg:col-span-7 flex flex-col justify-center order-2 lg:order-1 text-left">
-            {/* Brand Logo matching image: 'My' in purple, 'Website' in dark black */}
-            <div className="mb-8 sm:mb-12 md:mb-16">
-              <h1 className="text-4xl sm:text-5xl md:text-6xl font-black tracking-tight select-none">
-                <span className="text-[#5B4DFC]">My</span>
-                <span className="text-[#111827]">Website</span>
-              </h1>
+          {/* Left Column: Pill badge, Headline, Description, CTAs, Feature Badges */}
+          <div className="lg:col-span-7 space-y-6 sm:space-y-8 text-left">
+            
+            {/* Top Pill Badge matching image */}
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-indigo-50/80 border border-indigo-100 text-[#5B4DFC] text-xs font-semibold shadow-2xs">
+              <Dumbbell size={14} className="text-[#5B4DFC]" />
+              <span>Fitness • Health • Better You</span>
             </div>
 
             {/* Headline matching image */}
-            <div className="space-y-1 mb-5 sm:mb-6">
-              <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-[#111827] tracking-tight leading-tight">
+            <div className="space-y-1">
+              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black text-slate-900 tracking-tight leading-[1.15]">
                 Meet your modern
-              </h2>
-              <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-[#5B4DFC] tracking-tight leading-tight">
+              </h1>
+              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black text-[#5B4DFC] tracking-tight leading-[1.15]">
                 Habit Tracker App
-              </h2>
+              </h1>
             </div>
 
-            {/* Description matching image */}
-            <p className="text-slate-700 text-sm sm:text-base md:text-lg max-w-md font-normal leading-relaxed mb-8 sm:mb-10">
+            {/* Subtitle matching image */}
+            <p className="text-slate-500 text-base sm:text-lg max-w-lg font-normal leading-relaxed">
               Manage your daily tasks and workflow in a modern way and boost your efficiency without any efforts.
             </p>
 
-            {/* Actions: Join Now button & Already have an account? link */}
-            <div className="space-y-4">
-              <div className="flex flex-wrap items-center gap-3">
+            {/* CTAs matching image */}
+            <div className="space-y-3.5 pt-2">
+              <div className="flex flex-wrap items-center gap-4">
+                {/* Join Now Button */}
                 <button
                   type="button"
                   onClick={() => openAuth('signup')}
-                  className="px-8 sm:px-9 py-3 rounded-md bg-[#5B4DFC] hover:bg-[#483cd4] active:scale-[0.98] text-white font-medium text-sm sm:text-base shadow-sm transition-all duration-150 inline-flex items-center justify-center cursor-pointer"
+                  className="px-8 py-3.5 rounded-2xl bg-[#5B4DFC] hover:bg-[#483cd4] active:scale-[0.98] text-white font-bold text-sm sm:text-base shadow-lg shadow-indigo-200 transition-all duration-150 inline-flex items-center gap-2 cursor-pointer"
                 >
-                  Join Now
+                  <span>Join Now</span>
+                  <ArrowRight size={17} />
                 </button>
 
+                {/* Watch Demo / Login Button */}
+                <button
+                  type="button"
+                  onClick={() => openAuth('login')}
+                  className="px-6 py-3.5 rounded-2xl bg-white hover:bg-slate-50 active:scale-[0.98] text-slate-700 font-bold text-sm sm:text-base border border-slate-200 shadow-2xs transition-all duration-150 inline-flex items-center gap-2.5 cursor-pointer"
+                >
+                  <div className="w-6 h-6 rounded-full bg-[#5B4DFC] text-white flex items-center justify-center">
+                    <Play size={11} fill="white" className="ml-0.5" />
+                  </div>
+                  <span>Watch Demo</span>
+                </button>
+
+                {/* Fast One-Click Tester Login */}
                 <button
                   type="button"
                   onClick={handleDemoLogin}
                   disabled={loading}
-                  className="px-5 py-3 rounded-md bg-indigo-50 hover:bg-indigo-100 text-[#5B4DFC] font-semibold text-xs sm:text-sm border border-indigo-100 transition-all flex items-center gap-1.5 cursor-pointer"
+                  className="px-4 py-3.5 rounded-2xl bg-indigo-50/70 hover:bg-indigo-100/70 text-[#5B4DFC] font-bold text-xs border border-indigo-100 transition-all flex items-center gap-1.5 cursor-pointer"
+                  title="Instant Evaluator Demo Login"
                 >
-                  <Sparkles size={15} />
-                  <span>Demo One-Click</span>
+                  <Sparkles size={14} />
+                  <span>One-Click Login</span>
                 </button>
               </div>
 
+              {/* Already have an account? link */}
               <div>
                 <button
                   type="button"
                   onClick={() => openAuth('login')}
-                  className="text-xs sm:text-sm font-medium text-[#5B4DFC] hover:underline cursor-pointer block pt-1"
+                  className="text-xs sm:text-sm font-semibold text-[#5B4DFC] hover:underline cursor-pointer"
                 >
                   Already have an account?
                 </button>
               </div>
             </div>
+
+            {/* Feature Badges Row matching image */}
+            <div className="pt-6 border-t border-slate-100 grid grid-cols-1 sm:grid-cols-3 gap-5">
+              {/* Feature 1 */}
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-xl bg-indigo-50 border border-indigo-100 flex items-center justify-center text-[#5B4DFC] flex-shrink-0">
+                  <CheckCircle2 size={20} />
+                </div>
+                <div>
+                  <h4 className="text-xs sm:text-sm font-bold text-slate-800 leading-tight">
+                    Track Progress
+                  </h4>
+                  <p className="text-[11px] text-slate-400 mt-0.5">Stay consistent</p>
+                </div>
+              </div>
+
+              {/* Feature 2 */}
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-xl bg-purple-50 border border-purple-100 flex items-center justify-center text-[#5B4DFC] flex-shrink-0">
+                  <Zap size={20} />
+                </div>
+                <div>
+                  <h4 className="text-xs sm:text-sm font-bold text-slate-800 leading-tight">
+                    Build Habits
+                  </h4>
+                  <p className="text-[11px] text-slate-400 mt-0.5">Create better you</p>
+                </div>
+              </div>
+
+              {/* Feature 3 */}
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-xl bg-blue-50 border border-blue-100 flex items-center justify-center text-[#5B4DFC] flex-shrink-0">
+                  <ShieldCheck size={20} />
+                </div>
+                <div>
+                  <h4 className="text-xs sm:text-sm font-bold text-slate-800 leading-tight">
+                    Achieve Goals
+                  </h4>
+                  <p className="text-[11px] text-slate-400 mt-0.5">One step at a time</p>
+                </div>
+              </div>
+            </div>
+
           </div>
 
-          {/* Right Column: Lottie Animation from assets/login.json */}
-          <div className="lg:col-span-5 flex items-center justify-center order-1 lg:order-2 py-4 lg:py-0">
-            <CharacterAnimation />
+          {/* Right Column: Hero Character Visual matching uploaded image */}
+          <div className="lg:col-span-5 flex items-center justify-center relative">
+            <div className="relative w-full max-w-[480px] flex items-center justify-center">
+              {/* Soft decorative ambient glow */}
+              <div className="absolute w-72 h-72 rounded-full bg-indigo-100/60 blur-3xl -z-10"></div>
+              
+              <img
+                src={heroCharacter}
+                alt="Fitness & Habit Tracker App"
+                className="w-full h-auto object-contain select-none drop-shadow-xl"
+              />
+            </div>
           </div>
 
         </div>
-      </div>
+      </main>
+
+      {/* Footer copyright */}
+      <footer className="w-full max-w-7xl mx-auto px-6 sm:px-10 py-6 text-center text-xs text-slate-400">
+        © 2026 MyWebsite Habit Tracker. Designed for consistency & efficiency.
+      </footer>
 
       {/* Auth Modal (Sign Up & Log In) */}
       {isAuthOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/40 backdrop-blur-sm animate-fade-in">
-          <div className="bg-white rounded-2xl w-full max-w-[420px] shadow-2xl border border-slate-100 p-7 relative">
+          <div className="bg-white rounded-3xl w-full max-w-[420px] shadow-2xl border border-slate-100 p-7 sm:p-8 relative">
+            {/* Close button */}
             <button
               onClick={() => setIsAuthOpen(false)}
-              className="absolute top-5 right-5 p-1.5 rounded-lg text-slate-400 hover:text-slate-600 hover:bg-slate-100 transition-colors"
+              className="absolute top-6 right-6 p-1.5 rounded-lg text-slate-400 hover:text-slate-600 hover:bg-slate-100 transition-colors"
             >
               <X size={18} />
             </button>
 
             {/* Modal Title */}
             <div className="mb-5">
-              <h3 className="text-xl font-extrabold text-slate-900 tracking-tight">
+              <h3 className="text-xl sm:text-2xl font-black text-slate-900 tracking-tight">
                 {authMode === 'signup' ? 'Create Account' : 'Welcome Back'}
               </h3>
               <p className="text-xs text-slate-400 mt-0.5">
@@ -205,17 +267,6 @@ export default function LandingPage() {
             <div className="grid grid-cols-2 p-1 bg-slate-100 rounded-xl mb-5">
               <button
                 type="button"
-                onClick={() => { setAuthMode('signup'); setError(null); }}
-                className={`py-2 text-xs font-bold rounded-lg transition-all ${
-                  authMode === 'signup'
-                    ? 'bg-white text-slate-900 shadow-2xs'
-                    : 'text-slate-500 hover:text-slate-800'
-                }`}
-              >
-                Sign Up
-              </button>
-              <button
-                type="button"
                 onClick={() => { setAuthMode('login'); setError(null); }}
                 className={`py-2 text-xs font-bold rounded-lg transition-all ${
                   authMode === 'login'
@@ -224,6 +275,17 @@ export default function LandingPage() {
                 }`}
               >
                 Log In
+              </button>
+              <button
+                type="button"
+                onClick={() => { setAuthMode('signup'); setError(null); }}
+                className={`py-2 text-xs font-bold rounded-lg transition-all ${
+                  authMode === 'signup'
+                    ? 'bg-white text-slate-900 shadow-2xs'
+                    : 'text-slate-500 hover:text-slate-800'
+                }`}
+              >
+                Sign Up
               </button>
             </div>
 
@@ -297,6 +359,27 @@ export default function LandingPage() {
                     ? 'Create Free Account'
                     : 'Sign In'}
                 </button>
+              </div>
+
+              {/* Bottom toggle link */}
+              <div className="text-center pt-2">
+                {authMode === 'signup' ? (
+                  <button
+                    type="button"
+                    onClick={() => { setAuthMode('login'); setError(null); }}
+                    className="text-xs text-slate-500 hover:text-[#5B4DFC] font-medium"
+                  >
+                    Already have an account? <span className="font-bold text-[#5B4DFC] underline">Log In</span>
+                  </button>
+                ) : (
+                  <button
+                    type="button"
+                    onClick={() => { setAuthMode('signup'); setError(null); }}
+                    className="text-xs text-slate-500 hover:text-[#5B4DFC] font-medium"
+                  >
+                    Don't have an account? <span className="font-bold text-[#5B4DFC] underline">Sign Up</span>
+                  </button>
+                )}
               </div>
             </form>
           </div>
