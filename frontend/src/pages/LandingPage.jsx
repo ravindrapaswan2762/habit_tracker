@@ -1,23 +1,53 @@
-import React, { useState } from 'react';
-import { useLottie } from 'lottie-react';
+import React, { useState, useEffect, useRef } from 'react';
+import lottie from 'lottie-web';
 import loginAnimation from '../assets/login.json';
 import { useAuth } from '../context/AuthContext';
 import { X, Sparkles } from 'lucide-react';
 
 function CharacterAnimation() {
-  const options = {
-    animationData: loginAnimation,
-    loop: true,
-    autoplay: true,
-  };
+  const containerRef = useRef(null);
+  const [animLoaded, setAnimLoaded] = useState(false);
 
-  const { View } = useLottie(options, {
-    className: 'w-full h-full object-contain pointer-events-none select-none drop-shadow-sm'
-  });
+  useEffect(() => {
+    if (!containerRef.current) return;
+
+    let anim = null;
+    try {
+      anim = lottie.loadAnimation({
+        container: containerRef.current,
+        renderer: 'svg',
+        loop: true,
+        autoplay: true,
+        animationData: loginAnimation,
+        rendererSettings: {
+          preserveAspectRatio: 'xMidYMid meet',
+          progressiveLoad: true,
+          hideOnTransparent: false
+        }
+      });
+
+      anim.addEventListener('DOMLoaded', () => {
+        setAnimLoaded(true);
+      });
+    } catch (err) {
+      console.error('Failed to load lottie animation:', err);
+    }
+
+    return () => {
+      if (anim) {
+        try {
+          anim.destroy();
+        } catch (e) {}
+      }
+    };
+  }, []);
 
   return (
-    <div className="w-full max-w-[280px] sm:max-w-[340px] md:max-w-[400px] lg:max-w-[460px] h-[340px] sm:h-[420px] md:h-[480px] lg:h-[530px] flex items-center justify-center relative">
-      {View}
+    <div className="w-full max-w-[280px] sm:max-w-[340px] md:max-w-[390px] lg:max-w-[440px] h-[340px] sm:h-[420px] md:h-[480px] lg:h-[520px] flex items-center justify-center relative select-none">
+      <div
+        ref={containerRef}
+        className="w-full h-full flex items-center justify-center [&_svg]:max-h-full [&_svg]:w-auto [&_svg]:mx-auto"
+      />
     </div>
   );
 }
@@ -26,7 +56,7 @@ export default function LandingPage() {
   const { login, signup } = useAuth();
 
   const [isAuthOpen, setIsAuthOpen] = useState(false);
-  const [authMode, setAuthMode] = useState('signup'); // 'signup' or 'login'
+  const [authMode, setAuthMode] = useState('signup');
 
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
@@ -76,7 +106,7 @@ export default function LandingPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#F8F9FA] sm:bg-[#EFEFEF] flex items-center justify-center p-0 sm:p-6 md:p-10 font-['Plus_Jakarta_Sans',sans-serif]">
+    <div className="min-h-screen bg-[#F0F2F5] sm:bg-[#EAEAEA] flex items-center justify-center p-0 sm:p-6 md:p-10 font-['Plus_Jakarta_Sans',sans-serif]">
       {/* Main Hero Card matching exact Figma design */}
       <div className="w-full max-w-6xl min-h-screen sm:min-h-0 bg-white sm:rounded-[36px] sm:shadow-xl sm:border border-slate-100 overflow-hidden flex flex-col justify-between p-6 sm:p-10 md:p-14 lg:p-20">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
@@ -84,7 +114,7 @@ export default function LandingPage() {
           {/* Left Column: Branding, Headline, Paragraph, Actions */}
           <div className="lg:col-span-7 flex flex-col justify-center order-2 lg:order-1 text-left">
             {/* Brand Logo matching image: 'My' in purple, 'Website' in dark black */}
-            <div className="mb-10 sm:mb-14 md:mb-16">
+            <div className="mb-8 sm:mb-12 md:mb-16">
               <h1 className="text-4xl sm:text-5xl md:text-6xl font-black tracking-tight select-none">
                 <span className="text-[#5B4DFC]">My</span>
                 <span className="text-[#111827]">Website</span>
