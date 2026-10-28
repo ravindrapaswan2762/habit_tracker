@@ -63,30 +63,33 @@ export default function HomePage({ onOpenNewHabit, onOpenHabitDetails }) {
   const completedHabits = habits.filter((h) => h.isCompletedToday);
 
   return (
-    <div className="p-8 max-w-7xl mx-auto space-y-8 animate-fade-in" onClick={() => isPeriodMenuOpen && setIsPeriodMenuOpen(false)}>
+    <div 
+      className="p-4 sm:p-6 md:p-8 max-w-7xl mx-auto space-y-6 sm:space-y-8 animate-fade-in" 
+      onClick={() => isPeriodMenuOpen && setIsPeriodMenuOpen(false)}
+    >
       {/* Top Bar: Welcome & Date Filter */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+      <div className="flex flex-row items-center justify-between gap-3">
         <div>
-          <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight flex items-center gap-2">
+          <h1 className="text-xl sm:text-2xl md:text-3xl font-extrabold text-slate-900 tracking-tight flex items-center gap-1.5">
             <span>Welcome, {user?.firstName || 'Tanay'}</span>
-            <span className="text-2xl">👋</span>
+            <span className="text-xl sm:text-2xl">👋</span>
           </h1>
-          <p className="text-xs text-slate-400 mt-1">
+          <p className="text-xs text-slate-400 mt-0.5">
             Track your daily progress and boost consistency
           </p>
         </div>
 
         {/* Date / Period selector dropdown */}
-        <div className="relative inline-block text-left self-start sm:self-auto">
+        <div className="relative inline-block text-left flex-shrink-0">
           <button
             type="button"
             onClick={(e) => {
               e.stopPropagation();
               setIsPeriodMenuOpen(!isPeriodMenuOpen);
             }}
-            className="flex items-center gap-2 px-3.5 py-2 bg-white rounded-xl border border-slate-200 text-xs font-semibold text-slate-700 shadow-2xs hover:bg-slate-50 transition-colors"
+            className="flex items-center gap-1.5 px-3 py-1.5 sm:px-3.5 sm:py-2 bg-white rounded-xl border border-slate-200 text-xs font-semibold text-slate-700 shadow-2xs hover:bg-slate-50 transition-colors"
           >
-            <span className="text-[#5B4DFC]">Today</span>
+            <span className="text-[#5B4DFC]">{selectedPeriod}</span>
             <ChevronDown size={14} className="text-slate-400" />
           </button>
 
@@ -100,7 +103,7 @@ export default function HomePage({ onOpenNewHabit, onOpenHabitDetails }) {
                     setSelectedPeriod(p);
                     setIsPeriodMenuOpen(false);
                   }}
-                  className="w-full text-left px-3.5 py-1.5 hover:bg-slate-50"
+                  className="w-full text-left px-3.5 py-1.5 hover:bg-slate-50 transition-colors"
                 >
                   {p}
                 </button>
@@ -110,39 +113,39 @@ export default function HomePage({ onOpenNewHabit, onOpenHabitDetails }) {
         </div>
       </div>
 
-      {/* Stats Summary Cards Row matching Figma */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+      {/* Stats Summary Cards Row: 2 columns on mobile, 4 columns on desktop */}
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
         {/* Completed */}
-        <div className="bg-white rounded-2xl p-5 border border-slate-100 shadow-2xs hover:shadow-sm transition-shadow">
-          <p className="text-xs font-semibold text-slate-600 mb-1.5">Completed</p>
-          <p className="text-3xl font-extrabold text-slate-900 tracking-tight mb-1">
+        <div className="bg-white rounded-2xl p-4 sm:p-5 border border-slate-100 shadow-2xs hover:shadow-xs transition-shadow">
+          <p className="text-xs font-semibold text-slate-600 mb-1">Completed</p>
+          <p className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight mb-0.5">
             {stats.completed}
           </p>
           <p className="text-[11px] font-medium text-slate-400">Total Count</p>
         </div>
 
         {/* In Progress */}
-        <div className="bg-white rounded-2xl p-5 border border-slate-100 shadow-2xs hover:shadow-sm transition-shadow">
-          <p className="text-xs font-semibold text-slate-600 mb-1.5">In progress</p>
-          <p className="text-3xl font-extrabold text-slate-900 tracking-tight mb-1">
+        <div className="bg-white rounded-2xl p-4 sm:p-5 border border-slate-100 shadow-2xs hover:shadow-xs transition-shadow">
+          <p className="text-xs font-semibold text-slate-600 mb-1">In progress</p>
+          <p className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight mb-0.5">
             {stats.inProgress}
           </p>
           <p className="text-[11px] font-medium text-slate-400">Total Count</p>
         </div>
 
         {/* Overdue */}
-        <div className="bg-white rounded-2xl p-5 border border-slate-100 shadow-2xs hover:shadow-sm transition-shadow">
-          <p className="text-xs font-semibold text-slate-600 mb-1.5">Overdue</p>
-          <p className="text-3xl font-extrabold text-slate-900 tracking-tight mb-1">
+        <div className="bg-white rounded-2xl p-4 sm:p-5 border border-slate-100 shadow-2xs hover:shadow-xs transition-shadow">
+          <p className="text-xs font-semibold text-slate-600 mb-1">Overdue</p>
+          <p className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight mb-0.5">
             {stats.overdue}
           </p>
           <p className="text-[11px] font-medium text-slate-400">Total Count</p>
         </div>
 
         {/* Total */}
-        <div className="bg-white rounded-2xl p-5 border border-slate-100 shadow-2xs hover:shadow-sm transition-shadow">
-          <p className="text-xs font-semibold text-slate-600 mb-1.5">Total</p>
-          <p className="text-3xl font-extrabold text-slate-900 tracking-tight mb-1">
+        <div className="bg-white rounded-2xl p-4 sm:p-5 border border-slate-100 shadow-2xs hover:shadow-xs transition-shadow">
+          <p className="text-xs font-semibold text-slate-600 mb-1">Total</p>
+          <p className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight mb-0.5">
             {stats.total}
           </p>
           <p className="text-[11px] font-medium text-slate-400">Total Count</p>
@@ -150,10 +153,10 @@ export default function HomePage({ onOpenNewHabit, onOpenHabitDetails }) {
       </div>
 
       {/* Habits Section */}
-      <div className="space-y-6 pt-2">
+      <div className="space-y-5 pt-1">
         <div className="flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <h2 className="text-xl font-bold text-slate-900 tracking-tight flex items-center gap-1.5">
+          <div className="flex items-center gap-1.5">
+            <h2 className="text-lg sm:text-xl font-bold text-slate-900 tracking-tight flex items-center gap-1.5">
               <span>My Habits</span>
               <span className="text-rose-500">🎯</span>
             </h2>
@@ -161,7 +164,7 @@ export default function HomePage({ onOpenNewHabit, onOpenHabitDetails }) {
 
           <button
             onClick={onOpenNewHabit}
-            className="flex items-center gap-1.5 text-xs font-bold text-[#5B4DFC] hover:text-[#483cd4] transition-colors"
+            className="flex items-center gap-1 text-xs font-bold text-[#5B4DFC] hover:text-[#483cd4] transition-colors"
           >
             <Plus size={16} strokeWidth={2.5} />
             <span>Create Habit</span>
@@ -170,10 +173,10 @@ export default function HomePage({ onOpenNewHabit, onOpenHabitDetails }) {
 
         {/* Label Filters */}
         {labels.length > 0 && (
-          <div className="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-none">
+          <div className="flex items-center gap-1.5 sm:gap-2 overflow-x-auto pb-1 scrollbar-none -mx-1 px-1">
             <button
               onClick={() => setSelectedLabel(null)}
-              className={`px-3 py-1 rounded-full text-xs font-semibold transition-all whitespace-nowrap ${
+              className={`px-3 py-1 rounded-full text-xs font-semibold transition-all whitespace-nowrap flex-shrink-0 ${
                 selectedLabel === null
                   ? 'bg-slate-900 text-white shadow-2xs'
                   : 'bg-white border border-slate-200 text-slate-600 hover:bg-slate-50'
@@ -185,7 +188,7 @@ export default function HomePage({ onOpenNewHabit, onOpenHabitDetails }) {
               <button
                 key={lbl.id}
                 onClick={() => setSelectedLabel(selectedLabel === lbl.id ? null : lbl.id)}
-                className={`px-3 py-1 rounded-full text-xs font-semibold transition-all whitespace-nowrap ${
+                className={`px-3 py-1 rounded-full text-xs font-semibold transition-all whitespace-nowrap flex-shrink-0 ${
                   selectedLabel === lbl.id
                     ? 'bg-[#5B4DFC] text-white shadow-2xs'
                     : 'bg-white border border-slate-200 text-slate-600 hover:bg-slate-50'
@@ -207,9 +210,9 @@ export default function HomePage({ onOpenNewHabit, onOpenHabitDetails }) {
             {error}
           </div>
         ) : habits.length === 0 ? (
-          <div className="bg-white rounded-3xl p-12 text-center border border-dashed border-slate-200 max-w-md mx-auto space-y-4">
-            <div className="w-14 h-14 mx-auto rounded-full bg-indigo-50 flex items-center justify-center text-[#5B4DFC]">
-              <Sparkles size={24} />
+          <div className="bg-white rounded-3xl p-8 sm:p-12 text-center border border-dashed border-slate-200 max-w-md mx-auto space-y-4">
+            <div className="w-12 h-12 mx-auto rounded-full bg-indigo-50 flex items-center justify-center text-[#5B4DFC]">
+              <Sparkles size={22} />
             </div>
             <div>
               <h3 className="text-base font-bold text-slate-800">No habits yet</h3>
@@ -225,14 +228,14 @@ export default function HomePage({ onOpenNewHabit, onOpenHabitDetails }) {
             </button>
           </div>
         ) : (
-          <div className="space-y-7">
-            {/* ACTIVE Habits Subsection matching Figma */}
+          <div className="space-y-6">
+            {/* ACTIVE Habits Subsection */}
             {activeHabits.length > 0 && (
               <div className="space-y-3">
                 <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wider block">
-                  Active
+                  Active ({activeHabits.length})
                 </span>
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4">
                   {activeHabits.map((habit) => (
                     <HabitCard
                       key={habit.id}
@@ -245,13 +248,13 @@ export default function HomePage({ onOpenNewHabit, onOpenHabitDetails }) {
               </div>
             )}
 
-            {/* COMPLETED Habits Subsection matching Figma */}
+            {/* COMPLETED Habits Subsection */}
             {completedHabits.length > 0 && (
               <div className="space-y-3 pt-2">
                 <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wider block">
-                  Completed
+                  Completed ({completedHabits.length})
                 </span>
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4">
                   {completedHabits.map((habit) => (
                     <HabitCard
                       key={habit.id}

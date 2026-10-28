@@ -35,7 +35,7 @@ export default function ArchivePage({ onOpenHabitDetails }) {
 
   const handleDelete = async (habitId) => {
     try {
-      await api.habits.delete(habitId); // moves to trash
+      await api.habits.delete(habitId);
       setHabits(habits.filter(h => h.id !== habitId));
     } catch (err) {
       console.error('Failed to move to trash:', err);
@@ -43,11 +43,11 @@ export default function ArchivePage({ onOpenHabitDetails }) {
   };
 
   return (
-    <div className="p-8 max-w-7xl mx-auto space-y-8 animate-fade-in">
+    <div className="p-4 sm:p-6 md:p-8 max-w-7xl mx-auto space-y-6 sm:space-y-8 animate-fade-in">
       {/* Search Bar matching Figma */}
       <div className="relative">
-        <div className="flex items-center px-4 py-3 bg-white rounded-2xl border border-slate-200 shadow-sm max-w-lg">
-          <Search size={18} className="text-slate-400 mr-3 flex-shrink-0" />
+        <div className="flex items-center px-3.5 py-2.5 sm:px-4 sm:py-3 bg-white rounded-2xl border border-slate-200 shadow-2xs max-w-lg">
+          <Search size={17} className="text-slate-400 mr-2.5 flex-shrink-0" />
           <input
             type="text"
             value={search}
@@ -59,14 +59,14 @@ export default function ArchivePage({ onOpenHabitDetails }) {
       </div>
 
       <div>
-        <h1 className="text-2xl font-black text-slate-900 tracking-tight mb-1">Archive</h1>
+        <h1 className="text-xl sm:text-2xl font-black text-slate-900 tracking-tight mb-0.5">Archive</h1>
         <p className="text-xs text-slate-400">Archived habits are paused but preserve full completion history</p>
       </div>
 
       {loading ? (
         <div className="py-16 text-center text-slate-400 text-xs">Loading archived habits...</div>
       ) : habits.length === 0 ? (
-        <div className="bg-white rounded-3xl p-12 text-center border border-dashed border-slate-200 max-w-md mx-auto space-y-3">
+        <div className="bg-white rounded-3xl p-8 sm:p-12 text-center border border-dashed border-slate-200 max-w-md mx-auto space-y-3">
           <div className="w-12 h-12 mx-auto rounded-full bg-slate-100 flex items-center justify-center text-slate-400">
             <ArchiveIcon size={22} />
           </div>
@@ -76,7 +76,7 @@ export default function ArchivePage({ onOpenHabitDetails }) {
           </p>
         </div>
       ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4">
           {habits.map((habit) => (
             <HabitCard
               key={habit.id}
@@ -92,4 +92,3 @@ export default function ArchivePage({ onOpenHabitDetails }) {
     </div>
   );
 }
-
