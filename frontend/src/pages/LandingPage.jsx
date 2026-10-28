@@ -1,6 +1,26 @@
 import React, { useState } from 'react';
+import { useLottie } from 'lottie-react';
+import loginAnimation from '../assets/login.json';
 import { useAuth } from '../context/AuthContext';
-import { X, ArrowRight, Sparkles } from 'lucide-react';
+import { X, Sparkles } from 'lucide-react';
+
+function CharacterAnimation() {
+  const options = {
+    animationData: loginAnimation,
+    loop: true,
+    autoplay: true,
+  };
+
+  const { View } = useLottie(options, {
+    className: 'w-full h-full object-contain pointer-events-none select-none drop-shadow-sm'
+  });
+
+  return (
+    <div className="w-full max-w-[280px] sm:max-w-[340px] md:max-w-[400px] lg:max-w-[460px] h-[340px] sm:h-[420px] md:h-[480px] lg:h-[530px] flex items-center justify-center relative">
+      {View}
+    </div>
+  );
+}
 
 export default function LandingPage() {
   const { login, signup } = useAuth();
@@ -56,121 +76,79 @@ export default function LandingPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#F0F2F5] flex items-center justify-center p-4 md:p-8 font-['Plus_Jakarta_Sans',sans-serif]">
-      {/* Main Container Card matching Figma Landing Page */}
-      <div className="w-full max-w-5xl bg-white rounded-[36px] shadow-xl border border-slate-100 overflow-hidden p-8 md:p-16 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-        {/* Left Column: Copy & Actions */}
-        <div className="lg:col-span-7 space-y-8">
-          <div>
-            <h1 className="text-3xl font-extrabold tracking-tight text-slate-800 flex items-center gap-1.5">
-              My<span className="text-[#5B4DFC]">Website</span>
-            </h1>
-          </div>
+    <div className="min-h-screen bg-[#F8F9FA] sm:bg-[#EFEFEF] flex items-center justify-center p-0 sm:p-6 md:p-10 font-['Plus_Jakarta_Sans',sans-serif]">
+      {/* Main Hero Card matching exact Figma design */}
+      <div className="w-full max-w-6xl min-h-screen sm:min-h-0 bg-white sm:rounded-[36px] sm:shadow-xl sm:border border-slate-100 overflow-hidden flex flex-col justify-between p-6 sm:p-10 md:p-14 lg:p-20">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+          
+          {/* Left Column: Branding, Headline, Paragraph, Actions */}
+          <div className="lg:col-span-7 flex flex-col justify-center order-2 lg:order-1 text-left">
+            {/* Brand Logo matching image: 'My' in purple, 'Website' in dark black */}
+            <div className="mb-10 sm:mb-14 md:mb-16">
+              <h1 className="text-4xl sm:text-5xl md:text-6xl font-black tracking-tight select-none">
+                <span className="text-[#5B4DFC]">My</span>
+                <span className="text-[#111827]">Website</span>
+              </h1>
+            </div>
 
-          <div className="space-y-4">
-            <h2 className="text-4xl sm:text-5xl font-black text-slate-900 tracking-tight leading-[1.15]">
-              Meet your modern <br />
-              <span className="text-[#5B4DFC]">Habit Tracker App</span>
-            </h2>
+            {/* Headline matching image */}
+            <div className="space-y-1 mb-5 sm:mb-6">
+              <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-[#111827] tracking-tight leading-tight">
+                Meet your modern
+              </h2>
+              <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-[#5B4DFC] tracking-tight leading-tight">
+                Habit Tracker App
+              </h2>
+            </div>
 
-            <p className="text-slate-500 text-base md:text-lg max-w-lg leading-relaxed font-normal">
+            {/* Description matching image */}
+            <p className="text-slate-700 text-sm sm:text-base md:text-lg max-w-md font-normal leading-relaxed mb-8 sm:mb-10">
               Manage your daily tasks and workflow in a modern way and boost your efficiency without any efforts.
             </p>
-          </div>
 
-          <div className="space-y-4 pt-2">
-            <div className="flex flex-wrap items-center gap-4">
-              <button
-                onClick={() => openAuth('signup')}
-                className="px-8 py-3.5 rounded-2xl bg-[#5B4DFC] hover:bg-[#4d3fe6] active:scale-95 text-white font-bold text-sm shadow-lg shadow-indigo-200 transition-all duration-150 flex items-center gap-2"
-              >
-                <span>Join Now</span>
-                <ArrowRight size={17} />
-              </button>
+            {/* Actions: Join Now button & Already have an account? link */}
+            <div className="space-y-4">
+              <div className="flex flex-wrap items-center gap-3">
+                <button
+                  type="button"
+                  onClick={() => openAuth('signup')}
+                  className="px-8 sm:px-9 py-3 rounded-md bg-[#5B4DFC] hover:bg-[#483cd4] active:scale-[0.98] text-white font-medium text-sm sm:text-base shadow-sm transition-all duration-150 inline-flex items-center justify-center cursor-pointer"
+                >
+                  Join Now
+                </button>
 
-              <button
-                onClick={handleDemoLogin}
-                disabled={loading}
-                className="px-6 py-3.5 rounded-2xl bg-indigo-50 hover:bg-indigo-100 active:scale-95 text-[#5B4DFC] font-bold text-xs transition-all duration-150 flex items-center gap-2 border border-indigo-100"
-              >
-                <Sparkles size={15} />
-                <span>Demo One-Click Login</span>
-              </button>
+                <button
+                  type="button"
+                  onClick={handleDemoLogin}
+                  disabled={loading}
+                  className="px-5 py-3 rounded-md bg-indigo-50 hover:bg-indigo-100 text-[#5B4DFC] font-semibold text-xs sm:text-sm border border-indigo-100 transition-all flex items-center gap-1.5 cursor-pointer"
+                >
+                  <Sparkles size={15} />
+                  <span>Demo One-Click</span>
+                </button>
+              </div>
+
+              <div>
+                <button
+                  type="button"
+                  onClick={() => openAuth('login')}
+                  className="text-xs sm:text-sm font-medium text-[#5B4DFC] hover:underline cursor-pointer block pt-1"
+                >
+                  Already have an account?
+                </button>
+              </div>
             </div>
-
-            <div>
-              <button
-                onClick={() => openAuth('login')}
-                className="text-xs font-semibold text-[#5B4DFC] hover:underline cursor-pointer"
-              >
-                Already have an account?
-              </button>
-            </div>
           </div>
-        </div>
 
-        {/* Right Column: High Fidelity 3D Explorer Illustration */}
-        <div className="lg:col-span-5 flex items-center justify-center">
-          <div className="relative w-full max-w-[340px] aspect-square flex items-center justify-center">
-            <div className="absolute w-72 h-72 rounded-full bg-gradient-to-tr from-indigo-100/60 to-purple-50 blur-xl"></div>
-            
-            <svg viewBox="0 0 400 400" className="w-full h-full relative z-10 drop-shadow-xl" xmlns="http://www.w3.org/2000/svg">
-              <defs>
-                <linearGradient id="bodyGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                  <stop offset="0%" stopColor="#6366F1" />
-                  <stop offset="100%" stopColor="#4338CA" />
-                </linearGradient>
-                <linearGradient id="flagGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                  <stop offset="0%" stopColor="#FFFFFF" />
-                  <stop offset="100%" stopColor="#E2E8F0" />
-                </linearGradient>
-                <linearGradient id="backpackGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                  <stop offset="0%" stopColor="#F97316" />
-                  <stop offset="100%" stopColor="#EA580C" />
-                </linearGradient>
-                <filter id="shadow" x="-10%" y="-10%" width="130%" height="130%">
-                  <feDropShadow dx="0" dy="8" stdDeviation="6" floodOpacity="0.15" />
-                </filter>
-              </defs>
-
-              <ellipse cx="200" cy="360" rx="140" ry="24" fill="#E2E8F0" />
-              <ellipse cx="200" cy="358" rx="120" ry="18" fill="#CBD5E1" />
-
-              <rect x="235" y="165" width="45" height="75" rx="20" fill="url(#backpackGrad)" filter="url(#shadow)" />
-
-              <path d="M 230 240 L 255 330 L 275 335 L 260 345 L 225 340 Z" fill="#334155" />
-              <path d="M 185 240 L 155 290 L 185 320 L 195 325 L 150 330 Z" fill="#1E293B" />
-
-              <rect x="175" y="150" width="70" height="95" rx="32" fill="url(#bodyGrad)" filter="url(#shadow)" />
-
-              <circle cx="210" cy="115" r="24" fill="#FCD34D" filter="url(#shadow)" />
-              <path d="M 188 112 C 188 95, 232 95, 232 112 Z" fill="#1E293B" />
-
-              <path d="M 235 165 Q 260 145 250 120" stroke="#6366F1" strokeWidth="22" strokeLinecap="round" />
-              <circle cx="250" cy="115" r="13" fill="#FCD34D" />
-
-              <path d="M 185 175 Q 160 195 150 205" stroke="#4F46E5" strokeWidth="20" strokeLinecap="round" />
-              <circle cx="148" cy="208" r="13" fill="#FCD34D" />
-
-              <line x1="140" y1="60" x2="155" y2="355" stroke="#78350F" strokeWidth="6" strokeLinecap="round" />
-
-              <path d="M 143 65 L 230 75 Q 215 95 230 115 L 145 105 Z" fill="url(#flagGrad)" filter="url(#shadow)" />
-
-              <g transform="translate(60, 120)" className="animate-bounce" style={{ animationDuration: '3s' }}>
-                <rect width="44" height="44" rx="14" fill="#10B981" filter="url(#shadow)" />
-                <path d="M 14 22 L 20 28 L 30 16" fill="none" stroke="#FFFFFF" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" />
-              </g>
-
-              <g transform="translate(290, 210)" className="animate-bounce" style={{ animationDuration: '4s' }}>
-                <rect width="40" height="40" rx="12" fill="#5B4DFC" filter="url(#shadow)" />
-                <text x="12" y="26" fill="#FFFFFF" fontSize="20" fontWeight="bold">🔥</text>
-              </g>
-            </svg>
+          {/* Right Column: Lottie Animation from assets/login.json */}
+          <div className="lg:col-span-5 flex items-center justify-center order-1 lg:order-2 py-4 lg:py-0">
+            <CharacterAnimation />
           </div>
+
         </div>
       </div>
 
-      {/* Auth Modal */}
+      {/* Auth Modal (Sign Up & Log In) */}
       {isAuthOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/40 backdrop-blur-sm animate-fade-in">
           <div className="bg-white rounded-2xl w-full max-w-[420px] shadow-2xl border border-slate-100 p-7 relative">
@@ -181,7 +159,7 @@ export default function LandingPage() {
               <X size={18} />
             </button>
 
-            {/* Modal Title & Tabs */}
+            {/* Modal Title */}
             <div className="mb-5">
               <h3 className="text-xl font-extrabold text-slate-900 tracking-tight">
                 {authMode === 'signup' ? 'Create Account' : 'Welcome Back'}
@@ -236,7 +214,7 @@ export default function LandingPage() {
                       value={firstName}
                       onChange={(e) => setFirstName(e.target.value)}
                       placeholder="Tanay"
-                      className="w-full px-3.5 py-2 rounded-xl border border-slate-200 text-xs focus:outline-none focus:border-[#5B4DFC] focus:ring-2 focus:ring-[#5B4DFC]/10 transition-all"
+                      className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs focus:outline-none focus:border-[#5B4DFC] focus:ring-2 focus:ring-[#5B4DFC]/10 transition-all"
                     />
                   </div>
                   <div>
@@ -247,7 +225,7 @@ export default function LandingPage() {
                       value={lastName}
                       onChange={(e) => setLastName(e.target.value)}
                       placeholder="Pratap"
-                      className="w-full px-3.5 py-2 rounded-xl border border-slate-200 text-xs focus:outline-none focus:border-[#5B4DFC] focus:ring-2 focus:ring-[#5B4DFC]/10 transition-all"
+                      className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs focus:outline-none focus:border-[#5B4DFC] focus:ring-2 focus:ring-[#5B4DFC]/10 transition-all"
                     />
                   </div>
                 </div>
@@ -281,7 +259,7 @@ export default function LandingPage() {
                 <button
                   type="submit"
                   disabled={loading}
-                  className="w-full py-3 rounded-xl bg-[#5B4DFC] hover:bg-[#4d3fe6] text-white font-bold text-xs shadow-md shadow-indigo-100 transition-all disabled:opacity-50"
+                  className="w-full py-3 rounded-xl bg-[#5B4DFC] hover:bg-[#483cd4] text-white font-bold text-xs shadow-md shadow-indigo-100 transition-all disabled:opacity-50 cursor-pointer"
                 >
                   {loading
                     ? 'Please wait...'
