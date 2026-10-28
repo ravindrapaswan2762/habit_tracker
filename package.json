@@ -1,0 +1,22 @@
+{
+  "name": "habit-tracker-take-home",
+  "version": "1.0.0",
+  "description": "Full-stack Habit Tracker App built with Node.js and React",
+  "private": true,
+  "scripts": {
+    "start:backend": "npm --prefix backend start",
+    "dev:backend": "npm --prefix backend run dev",
+    "dev:frontend": "npm --prefix frontend run dev",
+    "build:frontend": "npm --prefix frontend run build",
+    "test:backend": "npm --prefix backend test",
+    "install:all": "npm --prefix backend install && npm --prefix frontend install"
+  },
+  "keywords": [
+    "habit-tracker",
+    "react",
+    "nodejs",
+    "fullstack"
+  ],
+  "author": "",
+  "license": "ISC"
+}
