@@ -4,18 +4,18 @@
 **Design Reference:** [Figma Design Reference](https://www.figma.com/file/37Ky6s3RjFkuEwUnzhdtxI/Habit-Tracker-App?node-id=0%3A1)  
 **Database:** SQLite via native `node:sqlite` (zero external C++ compilation dependencies)
 
-A modern, responsive full-stack Habit Tracker faithfully styled after the provided Figma designs. It includes authentication, habit lifecycle management, streak and completion tracking, calendar history views, labels organization, archive and trash support, dynamic analytics, and Lottie animations.
+A responsive full-stack Habit Tracker built according to the Figma design specification. It includes authentication, habit lifecycle management, streak and completion tracking, calendar history views, labels organization, archive and trash support, dynamic analytics, and animated assets.
 
 ---
 
-## 🌟 Features Implemented
+## Features Implemented
 
 ### 1. Authentication (P0)
 - **User Signup & Login:** Sign up with First Name, Last Name, Email, and Password.
-- **Input Validation:** Clear validation on email formatting, required fields, and password lengths.
+- **Input Validation:** Input checks on email formatting, required fields, and password lengths.
 - **Security:** Passwords hashed with `bcryptjs`. Protected routes authenticated with JWT tokens.
 - **Ownership Enforcement:** All private endpoints enforce that users can only view, edit, or delete their own habits and records.
-- **One-Click Demo Login:** Fast evaluator login pre-populated with Tanay Pratap's profile and initial habits.
+- **One-Click Demo Login:** Fast login pre-populated with Tanay Pratap's profile and initial habits for quick testing.
 
 ### 2. Habit Management (P0)
 - **Create Habit:** Name, optional description, start date, optional end date, daily/weekly/monthly frequency, daily goal counter (e.g. 1 time, 2 times), color theme (Blue, Pink, Yellow, Green, Purple), and label tags.
@@ -23,11 +23,11 @@ A modern, responsive full-stack Habit Tracker faithfully styled after the provid
 - **Edit Habit:** Update name, description, frequency, goal, color, status, and labels without erasing past completions.
 - **Archive & Unarchive:** Archive paused habits away from the active dashboard while preserving historical records.
 - **Soft Delete & Trash:** Move deleted habits to trash with the ability to restore or permanently delete them.
-- **Empty States:** Friendly empty states for Active habits, Archive, and Trash.
+- **Empty States:** Clear empty states for Active habits, Archive, and Trash.
 
 ### 3. Completion Tracking (P0)
 - **Interactive Checkmark Button:** Click the circular checkmark on any habit card to mark or toggle completion for the date.
-- **Confetti Celebration:** Rewarding confetti burst on habit completion.
+- **Confetti Celebration:** Confetti burst on habit completion.
 - **Duplicate Prevention:** Enforced via SQLite `UNIQUE(habit_id, date)` constraint and idempotent UPSERT API logic.
 - **Calendar Month History:** Interactive month calendar on the habit detail modal to view completions and click any past date to toggle completion.
 - **Preserved History:** Editing habit parameters does not alter historical completion logs.
@@ -41,8 +41,8 @@ A modern, responsive full-stack Habit Tracker faithfully styled after the provid
 - **Period Filter:** Dropdown to select tracking timeframe (`Today`, `This Week`, `This Month`, `All Time`).
 - **Calculated Statistics:** All counts and percentages are derived directly from SQLite completion records.
 
-### 5. Profile & Optional Extensions (P1)
-- **Streak Calculation:** Dynamic consecutive-day streak calculation based on user completion dates.
+### 5. Profile & Extensions (P1)
+- **Streak Calculation:** Consecutive-day streak calculation based on user completion dates.
 - **Habit Score:** Composite score (0-100) combining daily progress (40%), 7-day consistency (40%), and streaks (20%).
 - **Mood Score:** Interactive 1-5 rating check-in.
 - **Quote of the Day:** Inspiring quote with decorative quotation marks matching Figma.
@@ -51,7 +51,7 @@ A modern, responsive full-stack Habit Tracker faithfully styled after the provid
 
 ---
 
-## 🏗 Project Architecture
+## Project Architecture
 
 ```
 habit-tracker-take-home/
@@ -90,7 +90,7 @@ habit-tracker-take-home/
 │   │   │   ├── NewHabitModal.jsx# Create habit modal matching Figma
 │   │   │   └── HabitDetailModal.jsx # Read/edit modal & calendar history
 │   │   ├── pages/
-│   │   │   ├── LandingPage.jsx  # Hero page with Lottie character & auth modal
+│   │   │   ├── LandingPage.jsx  # Hero page with character animation & auth modal
 │   │   │   ├── HomePage.jsx     # Main dashboard with stats & active/completed habits
 │   │   │   ├── LabelsPage.jsx   # Labels management view
 │   │   │   ├── ArchivePage.jsx  # Archived habits view
@@ -109,7 +109,7 @@ habit-tracker-take-home/
 
 ---
 
-## ⚙️ Environment Variables
+## Environment Variables
 
 The project has zero-configuration defaults and runs out of the box. You can optionally customize environment variables in `backend/.env`:
 
@@ -121,7 +121,7 @@ The project has zero-configuration defaults and runs out of the box. You can opt
 
 ---
 
-## 🚀 Setup & Running Locally
+## Setup & Running Locally
 
 ### Prerequisites
 - Node.js v18+ (Node v20 or v22+ recommended; uses native `node:sqlite`)
@@ -166,7 +166,7 @@ The frontend application runs on `http://localhost:3000`.
 
 ---
 
-## 🧪 Running Automated Tests
+## Running Tests
 
 The test suite covers:
 1. **Authentication:** Signup validation, duplicate email prevention, password hashing, valid/invalid login, and token verification.
@@ -181,7 +181,7 @@ npm test
 
 ---
 
-## 📡 Example API Requests (`curl`)
+## Example API Requests (`curl`)
 
 ### 1. User Signup
 ```bash
@@ -211,7 +211,7 @@ curl -X PUT http://localhost:5001/api/habits/<HABIT_ID>/completions/2026-10-30 \
   -H "Authorization: Bearer <YOUR_JWT_TOKEN>"
 ```
 
-### 5. Fetch Dynamic Dashboard Statistics
+### 5. Fetch Dashboard Statistics
 ```bash
 curl -X GET "http://localhost:5001/api/dashboard/stats?date=2026-10-30" \
   -H "Authorization: Bearer <YOUR_JWT_TOKEN>"
@@ -225,16 +225,16 @@ curl -X GET http://localhost:5001/api/export/csv \
 
 ---
 
-## 💡 Assumptions and Known Limitations
+## Assumptions and Limitations
 
 1. **Date Format:** Calendar dates are consistently stored in ISO `YYYY-MM-DD` string format rather than UTC timestamps to prevent timezone shift issues across midnight.
 2. **Completion Rate Denominator:** For a 7-day period, the completion rate denominator is defined as `(Total Active Habits * 7 days)`, against which actual completions in the window are calculated.
-3. **Database Architecture:** SQLite was chosen via Node's native `node:sqlite` so that evaluators can clone and run the repository immediately without configuring PostgreSQL/MySQL services or dealing with native C++ compilation errors.
+3. **Database Choice:** SQLite was chosen via Node's native `node:sqlite` so that anyone can clone and run the repository immediately without configuring external database services or dealing with native compilation issues.
 4. **Offline Sync:** While changes persist to SQLite, offline queueing when disconnected is outside the assignment scope.
 
 ---
 
-## 📋 Acceptance Checklist Verification
+## Acceptance Checklist
 
 - [x] **Track identified:** Full-stack track implemented end-to-end.
 - [x] **Input validation & error states:** Present on all endpoints and frontend forms.
