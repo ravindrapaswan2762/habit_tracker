@@ -4,6 +4,16 @@ A responsive, full-stack habit tracking web application built with Node.js, Expr
 
 ---
 
+## 🎬 Demo Video
+
+Click the preview below to watch the project walkthrough:
+
+[![Watch the Habit Tracker demo](https://drive.google.com/thumbnail?id=1TUyO0h1ra_ljUqlVZ54y0fjQGerw2nUf&sz=w1000)](https://drive.google.com/file/d/1TUyO0h1ra_ljUqlVZ54y0fjQGerw2nUf/view?usp=sharing)
+
+▶️ [Watch on Google Drive](https://drive.google.com/file/d/1TUyO0h1ra_ljUqlVZ54y0fjQGerw2nUf/view?usp=sharing)
+
+---
+
 ## ⚡ Quick Start
 
 ### Prerequisites
@@ -143,5 +153,3 @@ habit_tracker/
 │   └── vite.config.js
 └── README.md
 ```
-
-
